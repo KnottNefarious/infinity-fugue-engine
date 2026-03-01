@@ -100,6 +100,17 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Infinity x Fugue</title>
+<!-- LinkedIn / OpenGraph Preview -->
+<meta property="og:title" content="Infinity Fugue Engine — Interactive AI System">
+<meta property="og:description" content="A self-evolving computational intelligence engine. Click to launch and interact live.">
+
+<meta property="og:image" content="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/ezgif-751459536f1e2012.gif">
+
+<meta property="og:url" content="https://unified-engine--KnottNefarious.replit.app">
+<meta property="og:type" content="website">
+
+<!-- Optional but improves preview -->
+<meta name="twitter:card" content="summary_large_image">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1b2a;color:#e8eaf0;min-height:100vh}
