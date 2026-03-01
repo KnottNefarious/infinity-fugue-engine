@@ -137,18 +137,18 @@ python tests/test_suite.py
 
 
 93 tests across 10 categories:
-|Type of test.             |number of type| |
-|--------------------------|--------------|-|
-- Taint Sources            |(7 tests)     |✓|
-- Taint Propagation        |(8 tests).    |✓|
-- Sink Detection.          |(18 tests)    |✓|
-- False Positives.         |(8 tests).    |✓|
-- Path Sensitivity         |(4 tests).    |✓|
-- Inter-Procedural         |(4 tests).    |✓|
-- Structural Quality.      |(11 tests).   |✓|
-- Mathematical             |(11 tests).   |✓|
-- Pipeline / Integration 3 |(9 tests).    |✓|
-- Edge Cases               |(13 tests).   |✓|
+|Type of test.              |number of type|✓|
+|---------------------------|--------------|-|
+|- Taint Sources            |(7 tests)     |✓|
+|- Taint Propagation        |(8 tests).    |✓|
+|- Sink Detection.          |(18 tests)    |✓|
+|- False Positives.         |(8 tests).    |✓|
+|- Path Sensitivity         |(4 tests).    |✓|
+|- Inter-Procedural         |(4 tests).    |✓|
+|- Structural Quality.      |(11 tests).   |✓|
+|- Mathematical             |(11 tests).   |✓|
+|- Pipeline / Integration 3 |(9 tests).    |✓|
+|- Edge Cases               |(13 tests).   |✓|
                                    ---
 
 All 93 pass.🤯
