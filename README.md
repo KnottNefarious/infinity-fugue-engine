@@ -4,9 +4,9 @@
 
 # Infinity × Fugue — Unified Code Analysis Engine 🎼
 
-> *"A language that an AI can use to talk about math while it's doing math."*
+> *"meta-mathamatical language that an AI can use to talk about math while it's doing/using math."*
 
- A Python code analysis engine built entirely on a single meta-mathematical framework — **Mathematical Contrapuntalism**. Not a linter with math added on top. The math *is* the analysis.
+  Python code analysis engine built entirely on a single meta-mathematical framework — **Mathematical Contrapuntalism**. Not a linter with math added on top. The math *is* the analysis.
 
 ---
 
