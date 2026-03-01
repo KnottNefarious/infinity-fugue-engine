@@ -1,5 +1,5 @@
 # infinity-fugue-engine  
-🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀<img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/Screenshot_20260301-044352~4.png" width="100">
+🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀<img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/Screenshot_20260301-044352~4.png" width="150">
 
  Python code analysis engine built on Mathematical Contrapuntalism — security + quality dissonance detection using generating functions, Banach convergence, and path-sensitive taint analysis.
 
