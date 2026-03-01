@@ -66,7 +66,6 @@ A taint analysis and Python security scanner providing static analysis powered b
 ---
 
 ## Quick Start
-## Quick Start
 
 ### Replit
 1. Import this repository into Replit
