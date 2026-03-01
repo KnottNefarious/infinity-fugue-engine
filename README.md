@@ -1,12 +1,12 @@
-🫀# infinity-fugue-engine 🫀
+# infinity-fugue-engine 🫀
 
-🐍 Python code analysis engine built on Mathematical Contrapuntalism — security + quality dissonance detection using generating functions, Banach convergence, and path-sensitive taint analysis.
+ Python code analysis engine built on Mathematical Contrapuntalism — security + quality dissonance detection using generating functions, Banach convergence, and path-sensitive taint analysis.
 
 # Infinity × Fugue — Unified Code Analysis Engine 🎼
 
 > *"A language that an AI can use to talk about math while it's doing math."*
 
-🐍 A Python code analysis engine built entirely on a single meta-mathematical framework — **Mathematical Contrapuntalism**. Not a linter with math added on top. The math *is* the analysis.
+ A Python code analysis engine built entirely on a single meta-mathematical framework — **Mathematical Contrapuntalism**. Not a linter with math added on top. The math *is* the analysis.
 
 ---
 
@@ -22,8 +22,8 @@ Deploy to Replit and visit the web interface to analyze code instantly.
 
 Analyzes Python code in two dimensions simultaneously: 🐍⛎
 
-**Security Dissonance** — finds vulnerabilities by proving that Γ cannot establish "input at sink S is safe":
-- SQL Injection
+**Security Dissonance** — finds vulnerabilities by proving that Γ cannot establish "input at sink S is safe":🧮
+- SQL Injection 
 - Command Injection
 - Path Traversal
 - Cross-Site Scripting (XSS)
@@ -134,7 +134,7 @@ All 93 pass.
 
 ---
 
-## Mathematical Foundations
+## Mathematical Foundations 🧠
 
 - **Generating Functions** — Flajolet & Sedgewick, *Analytic Combinatorics* (2009)
 - **Formal Logic Γ ⊢ φ** — Sequent calculus; Gentzen (1935)
@@ -147,6 +147,6 @@ All 93 pass.
 
 ---
 
-## License
+## License 🪪
 
 MIT
