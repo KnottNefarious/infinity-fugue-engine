@@ -50,13 +50,13 @@ Analyzes Python code in two dimensions simultaneously: 🐍⛎
 
 Each analysis stage maps exactly to one of the five original reasoning moves:
 
-| Move          | Math.                             | Engine Stage                                          |
-|---------------|-----------------------------------|------------------------------------------------------|
-| Subject       | G(x) = Σ aₙxⁿ                     | SubjectExtractor — reads structural shape, not values |
-| Dissonance.   | Γ ⊢ φ ⟺ ¬(Γ ∪ {¬φ} consistent).  | DissonanceDetector + PathSensitiveTaintAnalyzer.      |
-| Transposition | F : C ≅ D                        | TranspositionFinder — structural DNA matching.        |
-| Resolution    | lim \|Sₙ − L\| < ε                | ResolutionPredictor — Banach fixed-point convergence   |
-| Compression.  | K(x) = min{\|p\| : U(p) = x}      | KolmogorovComplexity + HalsteadMetrics                |
+| Move          | Math.                                         | Engine Stage                                          |
+|---------------|-----------------------------------------------|-------------------------------------------------------|
+| Subject       | G(x) = Σ aₙxⁿ                                 | SubjectExtractor — reads structural shape, not values |
+| Dissonance.   | Γ ⊢ φ ⟺ ¬(Γ ∪ {¬φ} consistent).              | DissonanceDetector + PathSensitiveTaintAnalyzer.      |
+| Transposition | F : C ≅ D                                    | TranspositionFinder — structural DNA matching.        |
+| Resolution    | lim \|Sₙ − L\| < ε                            | ResolutionPredictor — Banach fixed-point convergence  |
+| Compression.  | K(x) = min{\|p\| : U(p) = x}                  | KolmogorovComplexity + HalsteadMetrics                |
 
 Security analysis is not a sixth thing. It is **Dissonance at full depth** — the same formal structure, applied to a harder class of logical contradiction: the security contract a program makes with its users.
 
