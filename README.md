@@ -11,11 +11,7 @@ A Python code analysis engine built entirely on a single meta-mathematical frame
 
 Deploy to Replit and visit the web interface to analyze code instantly.
 
-[
-
-![Launch Infinity-Fugue-Engine](https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/1cc58596e1d5844b047ec95799cb75061296a8e3/pictures/Assets/ezgif-751459536f1e2012.gif)
-
-](https://fe7ca09d-a1e7-4c14-bffe-a0c723af82ab-00-151793tzovjnp.kirk.replit.dev/)
+[![Launch Infinity-Fugue-Engine](https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/1cc58596e1d5844b047ec95799cb75061296a8e3/pictures/Assets/ezgif-751459536f1e2012.gif)](https://fe7ca09d-a1e7-4c14-bffe-a0c723af82ab-00-151793tzovjnp.kirk.replit.dev/)
 
 ---
 
