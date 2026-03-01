@@ -111,10 +111,13 @@ header p{font-size:12px;color:#6a8faf;margin-top:2px}
 .panel{display:flex;flex-direction:column}
 .panel-header{background:#112233;border-bottom:1px solid #1e3a5c;padding:9px 14px;font-size:11px;font-weight:600;color:#6a8faf;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
 #code-input{flex:1;width:100%;background:#0a141f;color:#c8ddef;font-family:'Fira Code','Courier New',monospace;font-size:13px;line-height:1.6;padding:14px;border:none;outline:none;resize:none;border-right:1px solid #1e3a5c}
-.btn-row{padding:9px 14px;background:#0d1b2a;border-top:1px solid #1e3a5c;border-right:1px solid #1e3a5c;display:flex;gap:7px;align-items:center}
+.btn-row{padding:9px 14px;background:#0d1b2a;border-top:1px solid #1e3a5c;border-right:1px solid #1e3a5c;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .btn{padding:7px 18px;border:none;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s}
 .btn-primary{background:#1b5090;color:#fff}.btn-primary:hover{background:#2e75b6}
 .btn-secondary{background:#1e3a5c;color:#90c8f0}.btn-secondary:hover{background:#253d5c}
+.btn-upload{background:#1a3a1a;color:#4caf7c;border:1px solid #2a5c2a}.btn-upload:hover{background:#1f4a1f}
+#file-input{display:none}
+#file-label{font-size:10px;color:#4a7a9a;margin-top:2px}
 #results{flex:1;overflow-y:auto;background:#0d1b2a;padding:14px}
 .clean-badge{background:#0f3320;border:1px solid #1a5c38;border-radius:6px;padding:11px 14px;color:#4caf7c;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:7px}
 .section-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6a8faf;margin:14px 0 7px;padding-bottom:4px;border-bottom:1px solid #1e3a5c}
@@ -167,7 +170,7 @@ header p{font-size:12px;color:#6a8faf;margin-top:2px}
       <span>Source Code</span>
       <span id="line-count" style="color:#3a5a6a">0 lines</span>
     </div>
-    <textarea id="code-input" spellcheck="false" placeholder="# Paste Python code here...
+    <textarea id="code-input" spellcheck="false" placeholder="# Paste Python code here or tap Upload File below...
 
 from flask import Flask, request
 app = Flask(__name__)
@@ -181,10 +184,13 @@ def get_user():
       <button class="btn btn-primary" onclick="runAnalyze()">&#9654; Analyze</button>
       <button class="btn btn-secondary" onclick="showCompare()">&#8644; Compare</button>
       <button class="btn btn-secondary" onclick="clearAll()">&#10005; Clear</button>
+      <button class="btn btn-upload" onclick="document.getElementById('file-input').click()">&#128196; Upload File</button>
+      <input type="file" id="file-input" accept=".py,.txt" onchange="loadFile(event)">
       <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#6a8faf;margin-left:auto">
         <input type="checkbox" id="run-exec"> Execute
       </label>
     </div>
+    <div id="file-label" style="padding:4px 14px;font-size:10px;color:#3a5a6a;border-right:1px solid #1e3a5c;background:#0d1b2a;min-height:18px"></div>
   </div>
   <div class="panel">
     <div class="panel-header">
@@ -194,7 +200,7 @@ def get_user():
     <div id="results">
       <div style="padding:40px;text-align:center;color:#3a5a6a">
         <div style="font-size:30px;margin-bottom:10px">&#119070;</div>
-        <div>Write or paste Python code, then click Analyze.</div>
+        <div>Write, paste, or upload a .py file, then click Analyze.</div>
       </div>
     </div>
   </div>
@@ -204,14 +210,37 @@ const codeEl=document.getElementById('code-input');
 const resultsEl=document.getElementById('results');
 const runBadge=document.getElementById('run-badge');
 const lineCount=document.getElementById('line-count');
+const fileLabel=document.getElementById('file-label');
 
 codeEl.addEventListener('input',()=>{
   lineCount.textContent=codeEl.value.split('\n').length+' lines';
+  fileLabel.textContent='';
 });
+
+function loadFile(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  if(!file.name.endsWith('.py')&&!file.name.endsWith('.txt')){
+    fileLabel.textContent='Please choose a .py or .txt file';
+    fileLabel.style.color='#ff6060';
+    return;
+  }
+  const reader=new FileReader();
+  reader.onload=function(e){
+    codeEl.value=e.target.result;
+    const n=codeEl.value.split('\n').length;
+    lineCount.textContent=n+' lines';
+    fileLabel.textContent='Loaded: '+file.name+' ('+n+' lines)';
+    fileLabel.style.color='#4caf7c';
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
 
 function clearAll(){
   codeEl.value='';resultsEl.innerHTML='';
   lineCount.textContent='0 lines';runBadge.textContent='';
+  fileLabel.textContent='';
 }
 
 function showCompare(){
