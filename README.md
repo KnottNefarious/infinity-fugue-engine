@@ -149,7 +149,6 @@ python tests/test_suite.py
 |- Mathematical             |(11 tests).   |✓|
 |- Pipeline / Integration 3 |(9 tests).    |✓|
 |- Edge Cases               |(13 tests).   |✓|
-                                   ---
 
 All 93 pass.🤯
 
