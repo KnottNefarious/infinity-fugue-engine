@@ -137,7 +137,7 @@ python tests/test_suite.py
 
 
 93 tests across 10 categories:
-                                   ---
+|--------------------------|-------------|-|
 - Taint Sources            |(7 tests)    |✓|
 - Taint Propagation        |(8 tests).   |✓|
 - Sink Detection.          |(18 tests)   |✓|
