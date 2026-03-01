@@ -66,27 +66,43 @@ A taint analysis and Python security scanner providing static analysis powered b
 ---
 
 ## Quick Start
+## Quick Start
+
+### Replit
+1. Import this repository into Replit
+2. Click **Run** — Replit reads `.replit` and starts automatically
+3. Open the web interface in the Replit browser pane
+
+### Local
+```bash
+git clone https://github.com/YOUR_USERNAME/infinity-fugue-engine
+cd infinity-fugue-engine
+pip install -r requirements.txt
+python app.py
+# Open http://localhost:5000
+```
 
 ---
 
 ## API
 
 ### `POST /api/analyze`
-json
+```json
 { "code": "def view():\n    uid = request.args.get('id')\n    cursor.execute('SELECT * FROM t WHERE id = ' + uid)" }
-
+```
 Returns a full report: security findings, structural issues, K(x), Halstead, G(x), convergence sequence, fix predictions.
 
 ### `POST /api/compare`
-json
+```json
 { "code_a": "...", "code_b": "..." }
-
+```
 Returns structural transposition analysis: type similarity, depth similarity, call-graph similarity, verdict (isomorphic / similar / divergent).
 
 ### `GET /api/health`
 Returns engine status, run count, convergence history length.
 
 ---
+
 
 ## Architecture
 
