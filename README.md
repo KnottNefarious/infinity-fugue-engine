@@ -62,6 +62,8 @@ Each analysis stage maps exactly to one of the five original reasoning moves:
 Security analysis is not a sixth thing. It is **Dissonance at full depth** — the same formal structure, applied to a harder class of logical contradiction: the security contract a program makes with its users.
 
 ---
+taint analysis, Python security scanner, static analysis
+---
 
 ## Quick Start
 
