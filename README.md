@@ -130,25 +130,27 @@ Taint analysis uses a CFG × TaintState product construction. At each point in t
 
 ---
 
-## Tests
+## Tests 2️⃣➕2️⃣🟰❔
 
 bash
 python tests/test_suite.py
 
 
 93 tests across 10 categories:
-- Taint Sources (7 tests)
-- Taint Propagation (8 tests)
-- Sink Detection (18 tests)
-- False Positives (8 tests)
-- Path Sensitivity (4 tests)
-- Inter-Procedural (4 tests)
-- Structural Quality (11 tests)
-- Mathematical (11 tests)
-- Pipeline / Integration (9 tests)
-- Edge Cases (13 tests)
+                                   ---
+- Taint Sources            |(7 tests)    |✓|
+- Taint Propagation        |(8 tests).   |✓|
+- Sink Detection.          |(18 tests)   |✓|
+- False Positives.         |(8 tests).   |✓|
+- Path Sensitivity         |(4 tests).   |✓|
+- Inter-Procedural         |(4 tests).   |✓|
+- Structural Quality.      |(11 tests).  |✓|
+- Mathematical             |(11 tests).  |✓|
+- Pipeline / Integration 3 |(9 tests).   |✓|
+- Edge Cases               |(13 tests).  |✓|
+                                   ---
 
-All 93 pass.
+All 93 pass.🤯
 
 ---
 
