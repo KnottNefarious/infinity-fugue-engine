@@ -9,3 +9,18 @@ expertMode = true
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Run"
+mode = "sequential"
+author = 55322737
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd unified-engine && python app.py"
+
+[deployment]
+run = ["sh", "-c", "cd unified-engine && python app.py"]
+deploymentTarget = "cloudrun"
