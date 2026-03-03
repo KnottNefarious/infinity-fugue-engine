@@ -13,8 +13,10 @@
 
 ## Live Demo 💾
 
-<img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/Screenshot_20260301-044352~4.png" width="150">
-<img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/unnamed.jpg" width="150">
+<table><tr>
+  <td><img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/Screenshot_20260301-044352~4.png" width="150"></td>
+  <td><img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/unnamed.jpg" width="150"></td>
+</tr></table>
 
 
 👉 Deploy to Replit and visit the web interface to analyze code instantly.
@@ -102,12 +104,9 @@ Returns structural transposition analysis: type similarity, depth similarity, ca
 
 ### `GET /api/health`
 Returns engine status, run count, convergence history length.
-
 ---
 
-
 ## Architecture
-
 
 meta_code/
 ├── taint.py          Path-sensitive taint analysis (CFG × TaintState)
