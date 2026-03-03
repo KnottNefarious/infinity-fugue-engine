@@ -1,7 +1,7 @@
 # infinity-fugue-engine  
 🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀🫀
 
- Python code analysis engine built on Mathematical Contrapuntalism — security + quality dissonance detection using generating functions, Banach convergence, and path-sensitive taint analysis.
+ Python code analysis engine (mobile friendly) built on Mathematical Contrapuntalism — security + quality dissonance detection using generating functions, Banach convergence, and path-sensitive taint analysis.
 
 # Infinity × Fugue — Unified Code Analysis Engine 🎼
 
