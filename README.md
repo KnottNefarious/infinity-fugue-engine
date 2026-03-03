@@ -14,6 +14,8 @@
 ## Live Demo 💾
 
 <img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/Screenshot_20260301-044352~4.png" width="150">
+<img src="https://raw.githubusercontent.com/KnottNefarious/meta-code-engine/main/pictures/Assets/unnamed.jpg" width="150">
+
 
 👉 Deploy to Replit and visit the web interface to analyze code instantly.
 
