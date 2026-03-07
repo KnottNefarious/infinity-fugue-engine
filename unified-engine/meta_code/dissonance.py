@@ -333,12 +333,43 @@ class ShadowAnalyzer(ast.NodeVisitor):
         return x
 
     This is the false negative the original code missed.
+    
+    EXCLUDES initialization patterns:
+        x = None        ← initialization to sentinel value
+        if cond:
+            x = real_value  ← conditional assignment (allowed after init)
     """
 
     def __init__(self):
         self._last_assign: dict = {}   # name → node
         self._used: set = set()
+        self._in_conditional = False    # Track if we're inside if/elif/else/for/while
         self.issues: list[Issue] = []
+
+    def _is_init_value(self, node) -> bool:
+        """Check if a value is a sentinel/initialization value (None, False, [], {}, etc)."""
+        if node is None:
+            return False
+        if isinstance(node, ast.Constant):
+            # Sentinel/initialization values
+            if node.value is None:
+                return True
+            if node.value is False:
+                return True
+            if isinstance(node.value, str) and node.value == '':
+                return True
+            # Note: NOT flagging 0, True, etc. as init values since they're common literals
+        if isinstance(node, (ast.List, ast.Dict, ast.Set, ast.Tuple)):
+            # Empty collections are often used for initialization
+            if isinstance(node, ast.List):
+                return len(node.elts) == 0
+            if isinstance(node, ast.Dict):
+                return len(node.keys) == 0
+            if isinstance(node, ast.Set):
+                return len(node.elts) == 0
+            if isinstance(node, ast.Tuple):
+                return len(node.elts) == 0
+        return False
 
     def visit_Assign(self, node):
         # Visit RHS before LHS (RHS may read variables)
@@ -348,18 +379,78 @@ class ShadowAnalyzer(ast.NodeVisitor):
                 name = target.id
                 if name in self._last_assign and name not in self._used:
                     wasted = self._last_assign[name]
-                    self.issues.append(Issue(
-                        kind='shadowed_variable',
-                        message=f"Variable '{name}' reassigned before first use — first assignment is wasted",
-                        line=getattr(wasted, 'lineno', None),
-                        severity='warning',
-                    ))
+                    # Don't flag if:
+                    # 1. Previous assignment was to an init value (None, False, [])
+                    # 2. Current assignment is inside a conditional
+                    is_prev_init = self._is_init_value(wasted.value) if hasattr(wasted, 'value') else False
+                    if not is_prev_init and not self._in_conditional:
+                        self.issues.append(Issue(
+                            kind='shadowed_variable',
+                            message=f"Variable '{name}' reassigned before first use — first assignment is wasted",
+                            line=getattr(wasted, 'lineno', None),
+                            severity='warning',
+                        ))
                 self._last_assign[name] = node
                 self._used.discard(name)
 
     def visit_Name(self, node):
         if isinstance(node.ctx, ast.Load):
             self._used.add(node.id)
+
+    def visit_If(self, node):
+        """Track assignments inside if blocks."""
+        self.visit(node.test)
+        old_conditional = self._in_conditional
+        self._in_conditional = True
+        for stmt in node.body:
+            self.visit(stmt)
+        for stmt in node.orelse:
+            self.visit(stmt)
+        self._in_conditional = old_conditional
+
+    def visit_For(self, node):
+        """Track assignments inside for loops."""
+        self.visit(node.target)
+        self.visit(node.iter)
+        old_conditional = self._in_conditional
+        self._in_conditional = True
+        for stmt in node.body:
+            self.visit(stmt)
+        for stmt in node.orelse:
+            self.visit(stmt)
+        self._in_conditional = old_conditional
+
+    def visit_While(self, node):
+        """Track assignments inside while loops."""
+        self.visit(node.test)
+        old_conditional = self._in_conditional
+        self._in_conditional = True
+        for stmt in node.body:
+            self.visit(stmt)
+        for stmt in node.orelse:
+            self.visit(stmt)
+        self._in_conditional = old_conditional
+
+    def visit_With(self, node):
+        """Track assignments inside with blocks."""
+        old_conditional = self._in_conditional
+        self._in_conditional = True
+        self.generic_visit(node)
+        self._in_conditional = old_conditional
+
+    def visit_Try(self, node):
+        """Track assignments inside try/except blocks."""
+        old_conditional = self._in_conditional
+        self._in_conditional = True
+        for stmt in node.body + node.handlers + node.orelse + node.finalbody:
+            if isinstance(stmt, ast.ExceptHandler):
+                if stmt.name:
+                    self._used.add(stmt.name)
+                for s in stmt.body:
+                    self.visit(s)
+            else:
+                self.visit(stmt)
+        self._in_conditional = old_conditional
 
     def visit_FunctionDef(self, node):
         # Analyze the function body with a fresh shadow state
