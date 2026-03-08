@@ -214,6 +214,19 @@ class PathSensitiveTaintAnalyzer:
                 if hasattr(stmt, 'finalbody') and stmt.finalbody:
                     self._analyze_body(stmt.finalbody, state)
 
+            elif isinstance(stmt, ast.With):
+                # Handle `with open(tainted_path) as f:` — check the context
+                # manager call for sinks, then walk the body
+                for item in stmt.items:
+                    if isinstance(item.context_expr, ast.Call):
+                        self._scan_expr_for_sinks(item.context_expr, state, stmt)
+                    # If `as var`, propagate taint from the call result
+                    if item.optional_vars and isinstance(item.optional_vars, ast.Name):
+                        val = self._eval(item.context_expr, state)
+                        if val and val.tainted:
+                            state.set(item.optional_vars.id, val.add_step(item.optional_vars.id))
+                self._analyze_body(stmt.body, state)
+
             elif isinstance(stmt, ast.Raise):
                 live = False
 
