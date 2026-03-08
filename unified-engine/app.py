@@ -123,10 +123,10 @@ header .clef{font-size:38px;line-height:1}
 header h1{font-size:20px;font-weight:700;color:#90c8f0}
 header p{font-size:12px;color:#6a8faf;margin-top:2px}
 .layout{display:grid;grid-template-columns:1fr 1fr;height:calc(100vh - 80px)}
-.panel{display:flex;flex-direction:column}
+.panel{display:flex;flex-direction:column;overflow:hidden}
 .panel-header{background:#112233;border-bottom:1px solid #1e3a5c;padding:9px 14px;font-size:11px;font-weight:600;color:#6a8faf;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
 /* ── Code editor ── */
-.editor-wrap{flex:1;display:flex;overflow:hidden;border-right:1px solid #1e3a5c;background:#0a141f}
+.editor-wrap{flex:1;min-height:0;display:flex;overflow:hidden;border-right:1px solid #1e3a5c;background:#0a141f}
 #line-nums{width:42px;min-width:42px;background:#0d1f30;border-right:1px solid #1a2e42;padding:14px 6px 14px 0;font-family:'Fira Code','Courier New',monospace;font-size:13px;line-height:1.6;color:#3a6a8a;text-align:right;overflow:hidden;user-select:none;white-space:pre}
 #code-input{flex:1;background:#0a141f;color:#c8ddef;font-family:'Fira Code','Courier New',monospace;font-size:13px;line-height:1.6;padding:14px 14px 14px 10px;border:none;outline:none;resize:none;overflow-y:auto;white-space:pre;tab-size:4}
 /* ── Buttons ── */
