@@ -175,6 +175,21 @@ class PathSensitiveTaintAnalyzer:
                 self._scan_expr_for_sinks(stmt.value, state, stmt)
                 if isinstance(stmt.value, ast.Call):
                     self._eval_call(stmt.value, state)
+                    # Track list mutations: list.append(tainted), list.extend([tainted]), list.insert(i, tainted)
+                    call = stmt.value
+                    if (isinstance(call.func, ast.Attribute) and
+                            call.func.attr in {'append', 'extend', 'insert'} and
+                            isinstance(call.func.value, ast.Name)):
+                        list_name = call.func.value.id
+                        # append(val) / extend(val) — arg 0 is the value
+                        # insert(i, val) — arg 1 is the value
+                        arg_idx = 1 if call.func.attr == 'insert' else 0
+                        if len(call.args) > arg_idx:
+                            arg_val = self._eval(call.args[arg_idx], state)
+                            if arg_val and arg_val.tainted:
+                                existing = state.get(list_name)
+                                merged = existing.merge(arg_val) if existing else arg_val
+                                state.set(list_name, merged.add_step(list_name))
                 if self._is_terminator_call(stmt):
                     live = False
 
@@ -666,7 +681,7 @@ class PathSensitiveTaintAnalyzer:
         A SQL query is parameterized if:
         1. The first argument is a literal string containing %s, ?, or :name
         2. The first argument is NOT a concatenation (BinOp)
-        
+
         cursor.execute("SELECT %s", (val,)) -> parameterized (arg0 is literal with %s)
         cursor.execute("SELECT " + val) -> NOT parameterized (BinOp)
         cursor.executemany("INSERT (" + uid + ")", []) -> NOT parameterized (BinOp)

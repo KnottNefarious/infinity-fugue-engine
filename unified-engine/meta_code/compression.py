@@ -248,5 +248,7 @@ class KolmogorovComplexity:
             'compressed_size': compressed_size,
             'raw_ratio': round(compressed_size / raw_size, 4) if raw_size > 0 else 0.0,
             'normalized_ratio': round(normalized, 4),
+            'complexity': round(normalized, 4),   # alias for external consumers
+            'value': round(normalized, 4),         # alias for external consumers
             'interpretation': interpretation,
         }
