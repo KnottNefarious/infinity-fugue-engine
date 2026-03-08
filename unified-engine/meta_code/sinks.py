@@ -147,6 +147,17 @@ MISSING_AUTH = SinkDef(
     requires_shell_true=False,
 )
 
+CODE_INJECTION = SinkDef(
+    vuln_type='Code Injection (eval/exec)',
+    severity='CRITICAL',
+    reason='User input directly executed as Python code — allows arbitrary code execution',
+    fix='Never use eval() or exec() with user input. Use safer alternatives or sandboxing.',
+    exploitability='VERY LIKELY',
+    exploit_reason='Direct Python code execution — full server compromise with no restrictions',
+    call_names={'eval', 'exec', 'compile', '__import__'},
+    requires_shell_true=False,
+)
+
 
 # ── Lookup structures ─────────────────────────────────────────────────────────
 
@@ -160,7 +171,7 @@ METHOD_SINKS = {
 # All sinks that trigger on function call names
 CALL_SINKS = {
     name: sink
-    for sink in [COMMAND_INJECTION, OS_COMMAND, PATH_TRAVERSAL, SSRF, UNSAFE_DESERIALIZATION]
+    for sink in [COMMAND_INJECTION, OS_COMMAND, PATH_TRAVERSAL, SSRF, UNSAFE_DESERIALIZATION, CODE_INJECTION]
     for name in sink.call_names
 }
 
@@ -168,7 +179,7 @@ CALL_SINKS = {
 SAFE_VARIANTS = {
     name
     for sink in [SQL_INJECTION, COMMAND_INJECTION, PATH_TRAVERSAL, XSS,
-                 SSRF, UNSAFE_DESERIALIZATION, IDOR, MISSING_AUTH]
+                 SSRF, UNSAFE_DESERIALIZATION, IDOR, MISSING_AUTH, CODE_INJECTION]
     for name in sink.safe_variants
 }
 

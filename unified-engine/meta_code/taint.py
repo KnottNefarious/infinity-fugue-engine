@@ -634,6 +634,14 @@ class PathSensitiveTaintAnalyzer:
                     self._add_finding(UNSAFE_DESERIALIZATION, dval,
                                      f'{name}(data)', stmt)
 
+            # eval / exec / compile / __import__ at name level
+            if name in {'eval', 'exec', 'compile', '__import__'} and node.args:
+                first_arg = self._eval(node.args[0], state)
+                if first_arg and first_arg.tainted:
+                    from meta_code.sinks import CODE_INJECTION
+                    self._add_finding(CODE_INJECTION, first_arg,
+                                     f'{name}(...)', stmt)
+
     def _involves_html(self, node: ast.AST, state: TaintState) -> bool:
         HTML_TAGS = {'<html', '<div', '<script', '<h1', '<h2', '<h3', '<body',
                      '<span', '<p>', '<form', '<input', '<table', '<head',
