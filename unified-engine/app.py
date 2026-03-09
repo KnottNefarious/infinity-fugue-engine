@@ -388,7 +388,7 @@ header p{font-size:12px;color:#6a8faf;margin-top:2px}
       <button class="btn btn-upload" onclick="document.getElementById('zip-input').click()">&#128230; ZIP</button>
       <input type="file" id="file-input" accept=".py,.txt" multiple onchange="loadFiles(event)">
       <input type="file" id="zip-input" accept=".zip,application/zip,application/x-zip-compressed" onchange="loadZip(event)">
-      <button class="btn btn-upload" onclick="downloadFiles()" title="Download current file(s)">&#11015; Save</button>
+      <button class="btn btn-upload" onclick="downloadFiles()" title="Download current file(s)">&#11015; Download</button>
       <label style="display:flex;align-items:center;gap:6px;font-size:11px;color:#6a8faf;margin-left:auto">
         <input type="checkbox" id="run-exec"> Execute
       </label>
@@ -469,8 +469,9 @@ function installApp(){
 /* ── File tabs ────────────────────────────────────────────── */
 var _loadedFiles = [];   // [{name, content}, ...]
 var _activeTab   = 0;
-var _zipFile     = null;
-var _zipName     = 'archive';  // original zip filename stem
+var _zipFile        = null;
+var _zipName        = 'archive';  // original zip filename stem
+var _originalZipBlob = null;       // full original zip kept for faithful reconstruction
 
 function buildTabs(files){
   _loadedFiles = files;
@@ -540,6 +541,8 @@ function loadZip(event){
   }
   _zipFile = file;
   _zipName = file.name.replace(/\.zip$/i, '');
+  // Keep original blob so download can reconstruct faithfully
+  _originalZipBlob = file;
   _loadedFiles = [];
   buildTabs([]);
   editor.setValue('# ZIP: ' + file.name + '\n# Click Analyze to scan all .py files inside.');
@@ -645,16 +648,34 @@ function downloadFiles(){
       document.head.appendChild(s);
       return;
     }
-    var zip = new JSZip();
-    _loadedFiles.forEach(function(f){
-      // Preserve full relative path so folders are intact in the zip
-      zip.file(f.name, f.content);
-    });
-    var baseName = _zipName || 'archive';
+    var baseName    = _zipName || 'archive';
     var zipFilename = _nextDownloadName(baseName, '.zip');
-    zip.generateAsync({type:'blob'}).then(function(blob){
-      _triggerDownload(zipFilename, blob);
-    });
+
+    // Build a lookup of edited .py files by their full path
+    var editedMap = {};
+    _loadedFiles.forEach(function(f){ editedMap[f.name] = f.content; });
+
+    if(_originalZipBlob){
+      // Faithful reconstruction: load original zip, swap in edited .py files,
+      // keep every other file (markdown, config, images, etc.) exactly as-is
+      JSZip.loadAsync(_originalZipBlob).then(function(origZip){
+        Object.keys(editedMap).forEach(function(path){
+          if(origZip.files[path]){
+            origZip.file(path, editedMap[path]);
+          }
+        });
+        return origZip.generateAsync({type:'blob', compression:'DEFLATE'});
+      }).then(function(blob){
+        _triggerDownload(zipFilename, blob);
+      });
+    } else {
+      // No original zip stored — build from .py files only (multi-.py upload case)
+      var zip = new JSZip();
+      _loadedFiles.forEach(function(f){ zip.file(f.name, f.content); });
+      zip.generateAsync({type:'blob'}).then(function(blob){
+        _triggerDownload(zipFilename, blob);
+      });
+    }
   }
 }
 
@@ -676,7 +697,7 @@ function clearAll(){
   editor.setValue('');
   resultsEl.innerHTML=''; runBadge.textContent='';
   fileLabel.textContent=''; fileLabel.style.color='#3a5a6a';
-  _loadedFiles=[]; _activeTab=0; _zipFile=null; _zipName='archive';
+  _loadedFiles=[]; _activeTab=0; _zipFile=null; _zipName='archive'; _originalZipBlob=null;
   buildTabs([]);
 }
 
