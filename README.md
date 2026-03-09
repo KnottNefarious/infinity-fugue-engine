@@ -24,11 +24,17 @@ Analyzes Python code in two dimensions simultaneously: 🐍⛎
 - Insecure Direct Object Reference (IDOR)
 - Missing Authorization
 - Code Injection (eval/exec)
+  "core OWASP web vulnerabilities."
 
 **Structural Dissonance** — finds code quality issues by proving logical contradictions:
 - Unreachable code (after return, raise, constant-false conditions)
 - Unused variables (scope-aware, closure-aware)
 - Wasted assignments (overwritten before first read)
+  
+  This is essentially what tools like:
+- Pylint
+- SonarQube
+do for quality checks.
 
 **Mathematical Analysis** — every run produces:
 - G(x) = Σ aₙxⁿ — depth-indexed generating function (structural fingerprint)
