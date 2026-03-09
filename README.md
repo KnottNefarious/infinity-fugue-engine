@@ -12,7 +12,7 @@ A Python code analysis engine built entirely on a single meta-mathematical frame
 
 ## What It Does
 
-Analyzes Python code in two dimensions simultaneously:
+Analyzes Python code in two dimensions simultaneously: 🐍⛎
 
 **Security Dissonance** — finds vulnerabilities by proving that Γ cannot establish "input at sink S is safe":
 - SQL Injection
@@ -39,17 +39,17 @@ Analyzes Python code in two dimensions simultaneously:
 
 ---
 
-## The Framework
+## The Framework 🪟
 
 Each analysis stage maps exactly to one of the five original reasoning moves:
 
-| Move | Math | Engine Stage |
-|------|------|--------------|
-| Subject | G(x) = Σ aₙxⁿ | SubjectExtractor — reads structural shape, not values |
-| Dissonance | Γ ⊢ φ ⟺ ¬(Γ ∪ {¬φ} consistent) | DissonanceDetector + PathSensitiveTaintAnalyzer |
-| Transposition | F : C ≅ D | TranspositionFinder — structural DNA matching |
-| Resolution | lim \|Sₙ − L\| < ε | ResolutionPredictor — Banach fixed-point convergence |
-| Compression | K(x) = min{\|p\| : U(p) = x} | KolmogorovComplexity + HalsteadMetrics |
+| Move          | Math.                          | Engine Stage                                          |
+|---------------|--------------------------------|-------------------------------------------------------|
+| Subject.      | G(x) = Σ aₙxⁿ                  | SubjectExtractor — reads structural shape, not values |
+| Dissonance.   | Γ ⊢ φ ⟺ ¬(Γ ∪ {¬φ} consistent)| DissonanceDetector + PathSensitiveTaintAnalyzer       |
+| Transposition | F : C ≅ D                     | TranspositionFinder — structural DNA matching         |
+| Resolution.   | lim \|Sₙ − L\| < ε.            | ResolutionPredictor — Banach fixed-point convergence. |
+| Compression   | K(x) = min{\|p\| : U(p) = x}   | KolmogorovComplexity + HalsteadMetrics                |
 
 Security analysis is not a sixth thing. It is **Dissonance at full depth** — the same formal structure, applied to a harder class of logical contradiction: the security contract a program makes with its users.
 
@@ -73,25 +73,25 @@ python app.py
 
 ---
 
-## UI Features
+## UI Features 🖥️
 
-### Editor
+### Editor 📝
 - **CodeMirror 5** — full Python syntax highlighting with Dracula theme
 - Line numbers, Tab-key indent, proper mobile keyboard support
 - Click any finding → jumps to that exact line in the correct file, highlights it green
 
-### Multi-File & ZIP Support
+### Multi-File & ZIP Support 📂📂📁
 - Upload multiple `.py` files at once — each gets its own tab
 - Upload a `.zip` — all Python files extracted, analyzed as a unified project
 - Finding line numbers always show the **local** line within each file, never the combined offset
 - Click a filename in the results banner to jump directly to that file's tab
 
-### Download
+### Download ⬇️
 - **Single file** — prompts to rename, downloads as `.py`
 - **Multiple files / ZIP** — reconstructs the original zip faithfully: edited `.py` files swapped in, every other file (config, markdown, images, etc.) preserved exactly as uploaded
 - Downloaded zips named after the original (`microdot-1.zip` → `microdot-1(2).zip`)
 
-### Other
+### Other 
 - **Collapsible results panel** — tap `‹` to collapse to a slim strip for full-width editor
 - **Compare panel** — structural isomorphism analysis between two programs, with back button
 - **PWA install** — "Install App Now" button in header; installs as standalone app on Android/Chrome/Edge; iOS shows Share → Add to Home Screen instructions
@@ -136,7 +136,7 @@ Returns engine status, run count, convergence history length.
 
 ---
 
-## Architecture
+## Architecture 📁🌳
 
 ```
 unified-engine/
@@ -166,7 +166,7 @@ unified-engine/
     └── test_features.py   109 feature tests
 ```
 
-### Key Design Decisions
+### Key Design Decisions 🔑🐾
 
 **File combination** — multi-file and ZIP analysis combines all `.py` files with `# === FILE: path ===` headers. Offsets tracked so every finding reports `local_lineno` (line within its own file). Offset math uses `current_line += line_count + 1` — verified zero-discrepancy across all 89 files in the microdot test zip.
 
@@ -180,7 +180,7 @@ unified-engine/
 
 ---
 
-## Tests
+## Tests 🧪
 
 ```bash
 python tests/test_suite.py       # 93 tests
@@ -188,7 +188,7 @@ python tests/test_realworld.py   # 244 tests
 python tests/test_features.py    # 109 tests
 ```
 
-**Total: 446 tests, 446 passing.**
+**Total: 446 tests, 446 passing.** 🤯
 
 ### test_suite.py (93)
 Taint Sources · Taint Propagation · Sink Detection · False Positives · Path Sensitivity · Inter-Procedural · Structural Quality · Mathematical · Pipeline/Integration · Edge Cases
